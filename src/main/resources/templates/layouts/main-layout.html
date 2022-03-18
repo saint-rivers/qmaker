@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:fragment="main-fragment(navbar, title)">
+      th:fragment="main-fragment(title, navbar, content)">
 <head>
     <meta charset="UTF-8">
-    <title th:insert="${title}"></title>
+    <title th:replace="${title}"></title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
 <div th:insert="${navbar}">
-    <!-- inserting navbar provided by the fragment parameter -->
 </div>
+<div th:insert="${content}" class="container mx-auto"></div>
 </body>
 </html>

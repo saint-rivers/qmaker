@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layouts/main-layout :: main-fragment(~{fragments/navbar :: navbar}, ~{::title})}">
+      th:replace="~{layouts/main-layout :: main-fragment( ~{::#title}, ~{fragments/navbar :: navbar}, ~{:: .home-body})}">
 <head>
     <meta charset="UTF-8">
-    <title>QMaker</title>
+    <title id="title">QMaker</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" th:href="@{/main.css}">
 </head>
 <body>
+<div class="home-body">
+    <h1>hi this is the home content</h1>
+</div>
 </body>
 </html>
