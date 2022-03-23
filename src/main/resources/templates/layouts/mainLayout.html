@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="mainLayout(title, navbar, content)">
+<head>
+    <meta charset="UTF-8">
+    <title th:insert="${title}"></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div th:insert="${navbar}"></div>
+<div th:insert="${content}" class="mx-24"></div>
+</body>
+</html>
