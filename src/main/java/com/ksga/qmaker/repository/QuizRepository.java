@@ -12,12 +12,12 @@ import java.util.UUID;
  * @author dayan
  */
 @Mapper
-public interface QuizRepository extends BaseRepository<Quiz, UUID> {
+public interface QuizRepository extends BaseRepository<Quiz> {
 
     @Update("CREATE TABLE quizzes (" +
-            "    id                  uuid   NOT NULL " +
-            "        PRIMARY KEY, " +
-            "    name                text   NOT NULL " +
+            "id uuid NOT NULL PRIMARY KEY, " +
+            "name text NOT NULL, " +
+            "owner_id uuid NOT NULL " +
             ")")
     void createTable();
 
@@ -33,11 +33,14 @@ public interface QuizRepository extends BaseRepository<Quiz, UUID> {
     @Select("SELECT * FROM quizzes")
     List<Quiz> findAll();
 
-    @Select("INSERT INTO quizzes (id, name) VALUES (#{quizId}, #{quizName})" +
-            "RETURNING id, name;")
+    @Select("SELECT * FROM quizzes WHERE ownerId = #{ownerId}")
+    List<Quiz> findAllById(UUID ownerId);
+
+    @Select("INSERT INTO quizzes (id, name, owner_id) VALUES (#{quizId}, #{quizName}, #{ownerId})" +
+            "RETURNING id, name, owner_id;")
     @Result(column = "id", property = "id", id = true, typeHandler = UuidTypeHandler.class)
     @Result(column = "name", property = "name")
-    Quiz insert(UUID quizId, String quizName);
+    Quiz insert(UUID quizId, String quizName, UUID ownerId);
 
 
 }

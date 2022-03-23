@@ -1,14 +1,14 @@
 package com.ksga.qmaker.repository;
 
 import com.ksga.qmaker.base.BaseRepository;
-import com.ksga.qmaker.question.models.Question;
+import com.ksga.qmaker.quiz.models.Question;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.UUID;
 
 @Mapper
-public interface QuestionRepository extends BaseRepository<Question, Integer> {
+public interface QuestionRepository extends BaseRepository<Question> {
 
     @Update("CREATE TABLE questions (" +
             "id SERIAL PRIMARY KEY," +
@@ -27,12 +27,11 @@ public interface QuestionRepository extends BaseRepository<Question, Integer> {
     void drop();
 
     @Select("INSERT INTO questions (question, correct_answer, given_answer, points_awarded, quiz_id) " +
-            "VALUES (#{question.question}, #{question.correctAnswer}, #{question.givenAnswer}, #{question.pointsAwarded}, #{quizId}) " +
+            "VALUES (#{question.questionPrompt}, #{question.correctAnswer}, #{question.givenAnswer}, #{question.pointsAwarded}, #{quizId}) " +
             "RETURNING id, question, correct_answer, given_answer, points_awarded;")
     Question insert(@Param("question") Question type, UUID quizId);
 
     List<Question> findAll();
-
 
     Question findById(Integer id);
 }

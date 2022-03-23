@@ -1,6 +1,5 @@
 package com.ksga.qmaker.quiz.models;
 
-import com.ksga.qmaker.question.models.Question;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

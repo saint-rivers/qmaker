@@ -1,21 +1,22 @@
-package com.ksga.qmaker.question.models;
+package com.ksga.qmaker.quiz.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.UUID;
 
 @Data
 @Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Question {
 
     private Integer id;
 
     @NotEmpty
-    private String question;
+    private String questionPrompt;
 
     @NotEmpty
     private String correctAnswer;
