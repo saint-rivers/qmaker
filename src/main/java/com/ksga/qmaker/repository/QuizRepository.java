@@ -37,8 +37,9 @@ public interface QuizRepository extends BaseRepository<Quiz> {
     List<Quiz> findAllById(UUID ownerId);
 
     @Select("INSERT INTO quizzes (id, name, owner_id) VALUES (#{quizId}, #{quizName}, #{ownerId})" +
-            "RETURNING id, name, owner_id;")
+            "RETURNING id, name;")
     @Result(column = "id", property = "id", id = true, typeHandler = UuidTypeHandler.class)
+//    @Result(column = "owner_id", property = "ownerId", id = true, typeHandler = UuidTypeHandler.class)
     @Result(column = "name", property = "name")
     Quiz insert(UUID quizId, String quizName, UUID ownerId);
 

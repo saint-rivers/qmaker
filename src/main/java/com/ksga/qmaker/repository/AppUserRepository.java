@@ -2,10 +2,8 @@ package com.ksga.qmaker.repository;
 
 import com.ksga.qmaker.appuser.AppUser;
 import com.ksga.qmaker.base.BaseRepository;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import com.ksga.qmaker.config.typehandler.UuidTypeHandler;
+import org.apache.ibatis.annotations.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -31,6 +29,7 @@ public interface AppUserRepository extends BaseRepository<AppUser> {
     void drop();
 
     @Select("SELECT * FROM app_users WHERE id = #{id}")
+    @Result(property = "id", column = "id", id = true, typeHandler = UuidTypeHandler.class)
     AppUser findById(UUID id);
 
     @Insert("INSERT INTO app_users (id, firstname, lastname, email, password, date_created, last_updated, role)" +
