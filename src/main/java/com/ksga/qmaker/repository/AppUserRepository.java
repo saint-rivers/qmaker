@@ -29,9 +29,9 @@ public interface AppUserRepository extends BaseRepository<AppUser> {
     void drop();
 
     @Select("SELECT id, firstname, lastname, email, password, date_created, last_updated, role, is_enabled, is_locked " +
-            " FROM app_users WHERE id = #{ownerId}")
+            " FROM app_users WHERE id::text = #{ownerId}")
     @Result(property = "id", column = "id", id = true, typeHandler = UuidTypeHandler.class)
-    AppUser findById(@Param("ownerId") UUID ownerId);
+    AppUser findById(@Param("ownerId") String ownerId);
 
     @Insert("INSERT INTO app_users (id, firstname, lastname, email, password, date_created, last_updated, role)" +
             "VALUES (#{id}, #{firstname}, #{lastname}, #{email}, #{password}, #{dateCreated}, #{lastUpdated}, #{userRole} )")

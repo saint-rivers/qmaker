@@ -41,7 +41,7 @@ public class AppUserRepositoryTest {
         appUserRepository.insert(userId, "dayan", "eam", "rc@gmail.com", "asd", LocalDateTime.now(), LocalDateTime.now(), UserRole.USER.toString());
 
         // when
-        AppUser user = appUserRepository.findById(userId);
+        AppUser user = appUserRepository.findById(userId.toString());
 
         // then
         assertThat(user.getId()).isEqualTo(userId);

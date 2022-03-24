@@ -35,15 +35,10 @@ public interface QuizRepository extends BaseRepository<Quiz> {
             @Result(property = "id", column = "id", id = true, typeHandler = UuidTypeHandler.class),
             @Result(property = "name", column = "name"),
             @Result(property = "owner", column = "owner_id",
-                    one = @One(select = "findUserById"),
+                    one = @One(select = "com.ksga.qmaker.repository.AppUserRepository.findById"),
                     typeHandler = UuidTypeHandler.class)
     })
     List<Quiz> findAllByOwnerId(@Param("ownerId") String ownerId);
-
-    @Select("SELECT id, firstname, lastname, email, password, date_created, last_updated, role, is_enabled, is_locked " +
-            " FROM app_users WHERE id::text = #{ownerId}")
-    @Result(property = "id", column = "id", id = true, typeHandler = UuidTypeHandler.class)
-    AppUser findUserById(@Param("ownerId") String owner_id);
 
     //    testing =======================================================
 
