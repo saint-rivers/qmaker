@@ -8,7 +8,12 @@
 </head>
 <body>
 <div id="content">
-    <a th:href="@{/quiz/new}">New Quiz</a>
+    <div th:each="quiz: ${quizzes}">
+        <div class="bg-white flex flex-col text-left p-4 my-2">
+<!--            <p th:text="${quiz.id}"></p>-->
+            <p th:text="${quiz.name}"></p>
+        </div>
+    </div>
 </div>
 </body>
 </html>

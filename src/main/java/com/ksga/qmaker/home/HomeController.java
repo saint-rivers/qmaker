@@ -25,6 +25,7 @@ public class HomeController {
 //        return new ModelAndView("index", "quizzes", quizzes);
 
         List<Quiz> quizzes = quizService.findAllByUserId(tmpUserId);
+        System.out.println(quizzes);
         return new ModelAndView("index", "quizzes", quizzes);
     }
 }

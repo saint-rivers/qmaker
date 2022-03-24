@@ -35,7 +35,7 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public List<Quiz> findAllByUserId(UUID id) {
         // todo: add a real user uuid
-        return quizRepository.findAllByOwnerId(id);
+        return quizRepository.findAllByOwnerId(id.toString());
     }
 
     @Override

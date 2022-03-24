@@ -88,7 +88,7 @@ public class QuizRepositoryTest {
         quizRepository.insert(quizId2, quizName2, userId);
 
         // when
-        List<Quiz> quizzes = quizRepository.findAllByOwnerId(userId);
+        List<Quiz> quizzes = quizRepository.findAllByOwnerId(userId.toString());
 
         // then
         assertThat(quizzes.size()).isEqualTo(2);

@@ -8,7 +8,9 @@ import java.util.UUID;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedTypes;
 
+@MappedTypes(UUID.class)
 public class UuidTypeHandler extends BaseTypeHandler<UUID> {
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, UUID parameter, JdbcType jdbcType) throws SQLException {

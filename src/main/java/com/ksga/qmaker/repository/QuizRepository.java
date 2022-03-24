@@ -25,31 +25,29 @@ public interface QuizRepository extends BaseRepository<Quiz> {
     @Update("DROP TABLE quizzes")
     void drop();
 
-    @Select("SELECT EXISTS (" +
-            "SELECT FROM pg_tables " +
-            "WHERE schemaname = 'public' AND tablename='quizzes' " +
-            ")")
-    Boolean tableExists();
-
     @Select("SELECT * FROM quizzes")
     List<Quiz> findAll();
 
 // testing
 
-    @Select("SELECT id, name, owner_id FROM quizzes WHERE owner_id = #{ownerId}")
+    @Select("SELECT id, name, owner_id FROM quizzes WHERE owner_id::text = #{ownerId}")
     @Results({
             @Result(property = "id", column = "id", id = true, typeHandler = UuidTypeHandler.class),
             @Result(property = "name", column = "name"),
-            @Result(property = "owner", column = "owner.id", one = @One(select = "findUserById"), typeHandler = UuidTypeHandler.class)
+            @Result(property = "owner", column = "owner_id",
+                    one = @One(select = "findUserById"),
+                    typeHandler = UuidTypeHandler.class)
     })
-    List<Quiz> findAllByOwnerId(@Param("ownerId") UUID ownerId);
+    List<Quiz> findAllByOwnerId(@Param("ownerId") String ownerId);
 
     @Select("SELECT id, firstname, lastname, email, password, date_created, last_updated, role, is_enabled, is_locked " +
-            " FROM app_users WHERE id = #{ownerId}")
+            " FROM app_users WHERE id::text = #{ownerId}")
     @Result(property = "id", column = "id", id = true, typeHandler = UuidTypeHandler.class)
-    AppUser findUserById(@Param("ownerId") UUID owner_id);
+    AppUser findUserById(@Param("ownerId") String owner_id);
 
     //    testing =======================================================
+
+
     @Select("INSERT INTO quizzes (id, name, owner_id) VALUES (#{quizId}, #{quizName}, #{ownerId})" +
             "RETURNING id, name;")
     @Result(column = "id", property = "id", id = true, typeHandler = UuidTypeHandler.class)
