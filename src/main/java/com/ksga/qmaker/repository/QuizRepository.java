@@ -1,5 +1,6 @@
 package com.ksga.qmaker.repository;
 
+import com.ksga.qmaker.appuser.AppUser;
 import com.ksga.qmaker.base.BaseRepository;
 import com.ksga.qmaker.config.typehandler.UuidTypeHandler;
 import com.ksga.qmaker.quiz.models.Quiz;
@@ -33,14 +34,25 @@ public interface QuizRepository extends BaseRepository<Quiz> {
     @Select("SELECT * FROM quizzes")
     List<Quiz> findAll();
 
-    @Select("SELECT * FROM quizzes WHERE ownerId = #{ownerId}")
-    List<Quiz> findAllByOwnerId(UUID ownerId);
+// testing
 
+    @Select("SELECT id, name, owner_id FROM quizzes WHERE owner_id = #{ownerId}")
+    @Results({
+            @Result(property = "id", column = "id", id = true, typeHandler = UuidTypeHandler.class),
+            @Result(property = "name", column = "name"),
+            @Result(property = "owner", column = "owner.id", one = @One(select = "findUserById"), typeHandler = UuidTypeHandler.class)
+    })
+    List<Quiz> findAllByOwnerId(@Param("ownerId") UUID ownerId);
+
+    @Select("SELECT id, firstname, lastname, email, password, date_created, last_updated, role, is_enabled, is_locked " +
+            " FROM app_users WHERE id = #{ownerId}")
+    @Result(property = "id", column = "id", id = true, typeHandler = UuidTypeHandler.class)
+    AppUser findUserById(@Param("ownerId") UUID owner_id);
+
+    //    testing =======================================================
     @Select("INSERT INTO quizzes (id, name, owner_id) VALUES (#{quizId}, #{quizName}, #{ownerId})" +
             "RETURNING id, name;")
     @Result(column = "id", property = "id", id = true, typeHandler = UuidTypeHandler.class)
-//    @Result(column = "owner_id", property = "ownerId", id = true, typeHandler = UuidTypeHandler.class)
-    @Result(column = "name", property = "name")
     Quiz insert(UUID quizId, String quizName, UUID ownerId);
 
     @Select("SELECT id, name FROM quizzes WHERE id=#{quizId}")

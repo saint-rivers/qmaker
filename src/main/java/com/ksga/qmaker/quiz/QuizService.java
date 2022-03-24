@@ -13,7 +13,7 @@ public interface QuizService {
 
     void createNewQuiz(@Valid @NotNull Quiz quiz, @NotNull UUID userId);
 
-    List<Quiz> findAllByUserId(String id);
+    List<Quiz> findAllByUserId(UUID id);
 
     void addUnsavedQuestion(QuestionRequest question);
 

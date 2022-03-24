@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/mainLayout :: mainLayout(~{::#title}, ~{fragments/navbar :: navbar}, ~{::#content})}">
 <head>
     <meta charset="UTF-8">
-    <title>QMaker - New</title>
+    <title id="title">QMaker - New</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-<a th:href="@{/quiz/new}">New Quiz</a>
+<div id="content">
+    <a th:href="@{/quiz/new}">New Quiz</a>
+</div>
 </body>
 </html>

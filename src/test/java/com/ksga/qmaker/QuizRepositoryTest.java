@@ -6,6 +6,7 @@ import com.ksga.qmaker.quiz.models.Quiz;
 import com.ksga.qmaker.repository.AppUserRepository;
 import com.ksga.qmaker.repository.QuestionRepository;
 import com.ksga.qmaker.repository.QuizRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,28 +29,17 @@ public class QuizRepositoryTest {
     @Autowired
     private QuestionRepository questionRepository;
 
-    @Test
-    void shouldInsertQuiz() {
-        // given
-        UUID userId = UUID.randomUUID();
+    private UUID userId = null;
+
+    @BeforeEach
+    void setupUser() {
+        userId = UUID.randomUUID();
         appUserRepository.insert(userId, "dayan", "eam", "rc@gmail.com", "asd", LocalDateTime.now(), LocalDateTime.now(), UserRole.USER.toString());
-        UUID quizId = UUID.randomUUID();
-
-        // when
-        String quizName = "junit testing";
-        quizRepository.insert(quizId, quizName, userId);
-
-        // then
-        Quiz quiz = quizRepository.findById(quizId);
-        assertThat(quiz.getName()).isEqualTo(quizName);
-        assertThat(quiz.getId()).isEqualTo(quizId);
     }
 
     @Test
     void shouldInsertQuestions() {
         // given
-        UUID userId = UUID.randomUUID();
-        appUserRepository.insert(userId, "dayan", "eam", "rc@gmail.com", "asd", LocalDateTime.now(), LocalDateTime.now(), UserRole.USER.toString());
         UUID quizId = UUID.randomUUID();
         String quizName = "junit testing";
         quizRepository.insert(quizId, quizName, userId);
@@ -64,5 +54,46 @@ public class QuizRepositoryTest {
         // then
         assertThat(questions.size()).isEqualTo(3);
         assertThat(questions.get(0).getQuestionPrompt()).isNotNull();
+    }
+
+    @Test
+    void shouldInsertQuiz() {
+        // given
+        userId = UUID.randomUUID();
+        appUserRepository.insert(userId, "dayan", "eam", "rc@gmail.com", "asd", LocalDateTime.now(), LocalDateTime.now(), UserRole.USER.toString());
+
+        UUID quizId = UUID.randomUUID();
+//        userId = UUID.randomUUID();
+//        appUserRepository.insert(userId, "dayan", "eam", "rc@gmail.com", "asd", LocalDateTime.now(), LocalDateTime.now(), UserRole.USER.toString());
+
+        // when
+        String quizName = "junit testing";
+        quizRepository.insert(quizId, quizName, userId);
+
+        // then
+        Quiz quiz = quizRepository.findById(quizId);
+        assertThat(quiz.getName()).isEqualTo(quizName);
+        assertThat(quiz.getId()).isEqualTo(quizId);
+    }
+
+    @Test
+    void shouldFetchAllQuizzesByUserId() {
+        // given
+        UUID quizId = UUID.randomUUID();
+        String quizName = "junit testing";
+        quizRepository.insert(quizId, quizName, userId);
+
+        UUID quizId2 = UUID.randomUUID();
+        String quizName2 = "junit testing 2";
+        quizRepository.insert(quizId2, quizName2, userId);
+
+        // when
+        List<Quiz> quizzes = quizRepository.findAllByOwnerId(userId);
+
+        // then
+        assertThat(quizzes.size()).isEqualTo(2);
+        assertThat(quizzes.get(0).getName()).isEqualTo("junit testing");
+        assertThat(quizzes.get(0).getOwner()).isNotNull();
+        assertThat(quizzes.get(0).getOwner().getFirstname()).isEqualTo("dayan");
     }
 }
