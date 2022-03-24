@@ -17,8 +17,10 @@
                 </label>
             </div>
             <div class="md:w-2/3">
+                <label for="hid-id"></label>
+                <input type="text" id="hid-id" class="hidden" th:value="${quiz.id}" th:field="*{id}">
                 <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                       id="inline-full-name" type="text" th:value="*{name}" th:field="*{name}">
+                       id="inline-full-name" type="text" th:value="${quiz.name}" th:field="*{name}">
             </div>
         </div>
         <div th:if="${!questions.isEmpty()}">
@@ -48,7 +50,8 @@
 
     </form>
     <form th:action="@{/quiz/question}" method="post" th:object="${newQuestion}" class="flex flex-col w-1/2 mx-auto">
-        <h1 class="block text-gray-500 font-bold mb-1 md:mb-4 pr-4" for="inline-full-name">Quiz Form</h1>
+        <h1 class="block text-gray-500 font-bold mb-1 md:mb-4 pr-4">Quiz Form</h1>
+        <label for="quiz-id"></label>
         <input type="text" class="hidden" id="quiz-id" th:value="${quiz.id}" th:field="*{quizId}">
 
         <label for="question-prompt-in"> </label>

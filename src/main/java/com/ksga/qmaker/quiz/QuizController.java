@@ -55,8 +55,9 @@ public class QuizController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ModelAndView postQuiz(QuizRequest quiz) {
-        quizService.saveQuestionsToQuiz(quiz.toQuiz().getId());
+    public ModelAndView postQuiz(Quiz quiz) {
+        quizService.saveQuestionsToQuiz(quiz.getId());
+        quizService.updateQuizName(quiz);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("redirect:/");
         return mv;

@@ -21,9 +21,6 @@ public class HomeController {
 
     @GetMapping
     public ModelAndView index(){
-//        List<Quiz> quizzes = quizService.findAllByUserId("");
-//        return new ModelAndView("index", "quizzes", quizzes);
-
         List<Quiz> quizzes = quizService.findAllByUserId(tmpUserId);
         System.out.println(quizzes);
         return new ModelAndView("index", "quizzes", quizzes);

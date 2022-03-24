@@ -1,6 +1,7 @@
 package com.ksga.qmaker.quiz;
 
 import com.ksga.qmaker.quiz.models.QuestionRequest;
+import com.ksga.qmaker.quiz.models.QuizRequest;
 import com.ksga.qmaker.repository.QuestionRepository;
 import com.ksga.qmaker.quiz.models.Question;
 import com.ksga.qmaker.quiz.models.Quiz;
@@ -76,6 +77,11 @@ public class QuizServiceImpl implements QuizService {
             log.info("Unable to find quiz: {}", quizId.toString());
         }
         return new Quiz();
+    }
+
+    @Override
+    public void updateQuizName(Quiz quiz) {
+        quizRepository.update(quiz.getId().toString(), quiz.getName());
     }
 
     private void saveAll(UUID quizId, List<Question> questions) {

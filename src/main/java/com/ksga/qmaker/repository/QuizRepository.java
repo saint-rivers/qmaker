@@ -56,4 +56,7 @@ public interface QuizRepository extends BaseRepository<Quiz> {
     @Select("SELECT id, name FROM quizzes WHERE id=#{quizId}")
     @Result(property = "id", column = "id", id = true, typeHandler = UuidTypeHandler.class)
     Quiz findById(@Param("quizId") UUID quizId);
+
+    @Update("UPDATE quizzes SET name = #{quizName} WHERE id::text = #{quizId}")
+    void update(@Param("quizId") String quizId, @Param("quizName") String quizName);
 }

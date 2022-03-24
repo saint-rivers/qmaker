@@ -3,6 +3,7 @@ package com.ksga.qmaker.quiz;
 import com.ksga.qmaker.quiz.models.Question;
 import com.ksga.qmaker.quiz.models.QuestionRequest;
 import com.ksga.qmaker.quiz.models.Quiz;
+import com.ksga.qmaker.quiz.models.QuizRequest;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -22,4 +23,6 @@ public interface QuizService {
     List<Question> findQuestionsByQuizId(UUID quizId);
 
     Quiz findQuizById(UUID quizId);
+
+    void updateQuizName(Quiz quiz);
 }

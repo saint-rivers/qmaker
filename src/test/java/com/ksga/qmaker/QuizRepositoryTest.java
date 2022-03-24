@@ -31,17 +31,12 @@ public class QuizRepositoryTest {
 
     private UUID userId = null;
 
-    @BeforeEach
-    void setupUser() {
-        userId = UUID.randomUUID();
-        appUserRepository.insert(userId, "dayan", "eam", "rc@gmail.com", "asd", LocalDateTime.now(), LocalDateTime.now(), UserRole.USER.toString());
-    }
-
     @Test
     void shouldInsertQuestions() {
         // given
         UUID quizId = UUID.randomUUID();
         String quizName = "junit testing";
+        userId = UUID.randomUUID();
         quizRepository.insert(quizId, quizName, userId);
 
         questionRepository.insert("What?", "no", "", false, 1, quizId);
@@ -59,12 +54,9 @@ public class QuizRepositoryTest {
     @Test
     void shouldInsertQuiz() {
         // given
-        userId = UUID.randomUUID();
-        appUserRepository.insert(userId, "dayan", "eam", "rc@gmail.com", "asd", LocalDateTime.now(), LocalDateTime.now(), UserRole.USER.toString());
-
         UUID quizId = UUID.randomUUID();
-//        userId = UUID.randomUUID();
-//        appUserRepository.insert(userId, "dayan", "eam", "rc@gmail.com", "asd", LocalDateTime.now(), LocalDateTime.now(), UserRole.USER.toString());
+        userId = UUID.randomUUID();
+        appUserRepository.insert(userId, "dayan", "eam", "rcqweasdqwe@gmail.com", "asd", LocalDateTime.now(), LocalDateTime.now(), UserRole.USER.toString());
 
         // when
         String quizName = "junit testing";
@@ -79,6 +71,9 @@ public class QuizRepositoryTest {
     @Test
     void shouldFetchAllQuizzesByUserId() {
         // given
+        userId = UUID.randomUUID();
+        appUserRepository.insert(userId, "dayan", "eam", "asdasdasd@gmail.com", "asd", LocalDateTime.now(), LocalDateTime.now(), UserRole.USER.toString());
+
         UUID quizId = UUID.randomUUID();
         String quizName = "junit testing";
         quizRepository.insert(quizId, quizName, userId);
