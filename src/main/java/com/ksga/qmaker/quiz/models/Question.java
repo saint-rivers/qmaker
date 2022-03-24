@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.UUID;
 
 @Builder
 @Getter
@@ -22,7 +23,17 @@ public class Question {
 
     private Boolean isSaved;
 
-//    @NotEmpty
-//    @Size(min = 0, max = 100)
+    private UUID quizId;
+
+    @NotEmpty
+    @Size(min = 0, max = 100)
     private Integer pointsAwarded;
+
+    public QuestionRequest toQuestionRequest() {
+        return QuestionRequest.builder()
+                .questionPrompt(this.getQuestionPrompt())
+                .correctAnswer(this.getCorrectAnswer())
+                .pointsAwarded(this.getPointsAwarded())
+                .build();
+    }
 }

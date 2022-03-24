@@ -1,7 +1,6 @@
 package com.ksga.qmaker.repository;
 
 import com.ksga.qmaker.base.BaseRepository;
-import com.ksga.qmaker.config.typehandler.UuidTypeHandler;
 import com.ksga.qmaker.quiz.models.Question;
 import org.apache.ibatis.annotations.*;
 
@@ -43,5 +42,23 @@ public interface QuestionRepository extends BaseRepository<Question> {
     @Result(property = "isSaved", column = "is_saved")
     List<Question> findAllByQuizId(@Param("quizId") UUID quizId);
 
-    Question findById(Integer id);
+    @Select("SELECT id, question, correct_answer, is_saved, points_awarded FROM questions WHERE id = #{questionId}")
+    @Result(property = "id", column = "id")
+    @Result(property = "questionPrompt", column = "question")
+    @Result(property = "correctAnswer", column = "correct_answer")
+    @Result(property = "pointsAwarded", column = "points_awarded")
+    @Result(property = "isSaved", column = "is_saved")
+    Question findById(@Param("questionId") Integer id);
+
+    @Delete("DELETE FROM questions WHERE id::text = #{questionId}")
+    void delete(String questionId);
+
+    @Update("UPDATE questions " +
+            "SET question = #{questionPrompt}, " +
+            "correct_answer = #{correctAnswer}, " +
+            "given_answer = #{givenAnswer}, " +
+            "points_awarded = #{pointsAwarded}, " +
+            "is_saved = #{isSaved} " +
+            "WHERE id = #{questionId}")
+    void update(Integer questionId, String questionPrompt, String correctAnswer, String givenAnswer, Integer pointsAwarded, Boolean isSaved, String quizId);
 }

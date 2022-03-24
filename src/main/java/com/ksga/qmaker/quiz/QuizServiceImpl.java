@@ -1,7 +1,6 @@
 package com.ksga.qmaker.quiz;
 
 import com.ksga.qmaker.quiz.models.QuestionRequest;
-import com.ksga.qmaker.quiz.models.QuizRequest;
 import com.ksga.qmaker.repository.QuestionRepository;
 import com.ksga.qmaker.quiz.models.Question;
 import com.ksga.qmaker.quiz.models.Quiz;
@@ -82,6 +81,29 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public void updateQuizName(Quiz quiz) {
         quizRepository.update(quiz.getId().toString(), quiz.getName());
+    }
+
+    @Override
+    public void deleteQuestion(String questionId) {
+        questionRepository.delete(questionId);
+    }
+
+    @Override
+    public Question findQuestionById(Integer questionId) {
+        return questionRepository.findById(questionId);
+    }
+
+    @Override
+    public void updateQuestion(Integer questionId, QuestionRequest question) {
+        questionRepository.update(
+                questionId,
+                question.getQuestionPrompt(),
+                question.getCorrectAnswer(),
+                question.getGivenAnswer(),
+                question.getPointsAwarded(),
+                false,
+                question.getQuizId().toString()
+        );
     }
 
     private void saveAll(UUID quizId, List<Question> questions) {

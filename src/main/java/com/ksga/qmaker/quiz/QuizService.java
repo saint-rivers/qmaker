@@ -25,4 +25,10 @@ public interface QuizService {
     Quiz findQuizById(UUID quizId);
 
     void updateQuizName(Quiz quiz);
+
+    void deleteQuestion(String questionId);
+
+    Question findQuestionById(Integer questionId);
+
+    void updateQuestion(Integer questionId, QuestionRequest question);
 }

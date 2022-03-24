@@ -1,6 +1,5 @@
 package com.ksga.qmaker.repository;
 
-import com.ksga.qmaker.appuser.AppUser;
 import com.ksga.qmaker.base.BaseRepository;
 import com.ksga.qmaker.config.typehandler.UuidTypeHandler;
 import com.ksga.qmaker.quiz.models.Quiz;
@@ -28,8 +27,6 @@ public interface QuizRepository extends BaseRepository<Quiz> {
     @Select("SELECT * FROM quizzes")
     List<Quiz> findAll();
 
-// testing
-
     @Select("SELECT id, name, owner_id FROM quizzes WHERE owner_id::text = #{ownerId}")
     @Results({
             @Result(property = "id", column = "id", id = true, typeHandler = UuidTypeHandler.class),
@@ -39,9 +36,6 @@ public interface QuizRepository extends BaseRepository<Quiz> {
                     typeHandler = UuidTypeHandler.class)
     })
     List<Quiz> findAllByOwnerId(@Param("ownerId") String ownerId);
-
-    //    testing =======================================================
-
 
     @Select("INSERT INTO quizzes (id, name, owner_id) VALUES (#{quizId}, #{quizName}, #{ownerId})" +
             "RETURNING id, name;")
