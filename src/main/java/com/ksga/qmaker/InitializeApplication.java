@@ -81,12 +81,13 @@ public class InitializeApplication implements CommandLineRunner {
         quizRepository.insert(UUID.randomUUID(), "Linux Shell", tmpUser);
         quizRepository.insert(UUID.randomUUID(), "Docker", tmpUser);
 
-        Question question = questionRepository.insert(Question.builder()
-                .questionPrompt("2+2")
-                .correctAnswer("4")
-                .givenAnswer("5")
-                .pointsAwarded(1)
-                .build(), ooadQuiz.getId());
+        Question question = questionRepository.insert(
+                "2+2",
+                "2",
+                "5",
+                false,
+                5,
+                ooadQuiz.getId());
         System.out.println(question);
     }
 

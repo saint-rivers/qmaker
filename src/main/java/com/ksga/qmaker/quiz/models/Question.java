@@ -5,7 +5,6 @@ import lombok.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-@Data
 @Builder
 @Getter
 @Setter
@@ -15,15 +14,15 @@ public class Question {
 
     private Integer id;
 
-    @NotEmpty
     private String questionPrompt;
 
-    @NotEmpty
     private String correctAnswer;
 
     private String givenAnswer;
 
-    @NotEmpty
-    @Size(min = 0, max = 100)
-    private int pointsAwarded;
+    private Boolean isSaved;
+
+//    @NotEmpty
+//    @Size(min = 0, max = 100)
+    private Integer pointsAwarded;
 }

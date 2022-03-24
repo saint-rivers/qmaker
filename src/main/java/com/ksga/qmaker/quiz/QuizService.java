@@ -1,6 +1,7 @@
 package com.ksga.qmaker.quiz;
 
 import com.ksga.qmaker.quiz.models.Question;
+import com.ksga.qmaker.quiz.models.QuestionRequest;
 import com.ksga.qmaker.quiz.models.Quiz;
 
 import javax.validation.Valid;
@@ -10,7 +11,15 @@ import java.util.UUID;
 
 public interface QuizService {
 
-    void createNewQuiz(@Valid @NotNull Quiz quiz, @NotNull UUID userId, List<Question> questions);
+    void createNewQuiz(@Valid @NotNull Quiz quiz, @NotNull UUID userId);
 
     List<Quiz> findAllByUserId(String id);
+
+    void addUnsavedQuestion(QuestionRequest question);
+
+    void saveQuestionsToQuiz(UUID quizId);
+
+    List<Question> findQuestionsByQuizId(UUID quizId);
+
+    Quiz findQuizById(UUID quizId);
 }

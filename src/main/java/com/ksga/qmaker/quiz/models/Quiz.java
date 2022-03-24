@@ -17,4 +17,9 @@ public class Quiz {
     private AppUser owner;
 //    private String author;
     private List<Question> questions;
+
+    public Quiz(UUID id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
